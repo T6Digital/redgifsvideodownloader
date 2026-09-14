@@ -1,8 +1,31 @@
 # RedGifs Video Downloader
-Download videos from redgifs by copying the html code using a free extension that is included
 
-step 1: download the chrome/edge extension
-step 2: install the extension
-step 3: browse redgifs and right click any videos and copy the tile code (1 or 4 or 8 in a row)
-step 4: paste the code into the redgifs video downloader
-step 5: click download button and download video with sound
+A simple tool to download videos from RedGifs easily. This method uses a companion browser extension to copy the required video elements and a web interface to extract and download the videos with sound.
+
+---
+
+## Installation
+
+1. **Download the Extension:** Download the Chrome/Edge extension package [Here](#) *(replace with your link)*.
+2. **Enable Developer Mode:** 
+   * Open your browser's extension page (`chrome://extensions` or `edge://extensions`).
+   * Toggle on **Developer mode** in the top right corner.
+3. **Install the Extension:** Click **Load unpacked** and select the downloaded extension folder (or drag and drop the extension file into the extensions page).
+
+---
+
+## Usage
+
+1. Browse RedGifs and locate the video(s) you wish to download.
+2. Right-click the video tile and select the option to copy the tile code. 
+   * *Note: You can copy a single tile or up to 8 tiles at a time.*
+3. Navigate to the RedGifs Video Downloader extractor page.
+4. Paste the copied code into the extractor area.
+5. Click the **Download** button to save your video(s) with sound.
+
+---
+
+## Security & Privacy
+
+* **100% Safe:** The extension and web page contain no viruses, malware, tracking, or phishing mechanisms. 
+* **Open Source / Transparent:** Feel free to inspect the source code.
