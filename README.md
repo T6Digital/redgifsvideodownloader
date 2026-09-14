@@ -1,5 +1,5 @@
-# redgifsvideodownloader
-download videos from redgifs by copying the html code using an extension
+# RedGifs Video Downloader
+Download videos from redgifs by copying the html code using a free extension that is included
 
 step 1: download the chrome/edge extension
 step 2: install the extension
