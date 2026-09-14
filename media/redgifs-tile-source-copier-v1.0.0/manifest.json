@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "RedGIFs Tile Source Copier",
+  "version": "1.0.0",
+  "description": "Right-click a RedGIFs tile to copy 1, 4, or 8 consecutive tile source blocks.",
+  "permissions": [
+    "contextMenus",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "https://www.redgifs.com/*",
+    "https://redgifs.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.redgifs.com/*",
+        "https://redgifs.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

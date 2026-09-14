@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RedGifs Video Downloader</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-solid: #121212;
+            --card-bg: #1a1a1a;
+            --nav-bg: #121212;
+            --text-color: #f1f5f9;
+            --accent-red: #ef4444;
+            --accent-dark-red: #dc2626;
+            --border-color: rgba(239, 68, 68, 0.2);
+            --muted-color: #94a3b8;
+            --textarea-bg: #0f0f0f;
+            --info-bg: #161616;
+            --step-bg: #181818;
+            --beer-bg: #333333;
+        }
+
+        [data-theme="light"] {
+            --bg-solid: #f1f5f9;
+            --card-bg: #ffffff;
+            --nav-bg: #ffffff;
+            --text-color: #0f172a;
+            --accent-red: #dc2626;
+            --accent-dark-red: #b91c1c;
+            --border-color: rgba(220, 38, 38, 0.15);
+            --muted-color: #64748b;
+            --textarea-bg: #f8fafc;
+            --info-bg: #f8fafc;
+            --step-bg: #f8fafc;
+            --beer-bg: #e2e8f0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg-solid);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-anchor: none;
+        }
+
+        /* Top Nav Bar */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: var(--nav-bg);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+        }
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: var(--accent-red);
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+        .nav-links a:hover {
+            color: var(--accent-red);
+        }
+        .theme-toggle-btn {
+            background: var(--step-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Main Wrapper */
+        .wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 30px 16px;
+            gap: 30px;
+        }
+
+        .container, .guide-container, .faq-container {
+            width: 100%;
+            max-width: 600px;
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+            contain: content;
+            transition: max-width 0.2s ease;
+        }
+
+        .container.batch-active {
+            max-width: 1200px;
+        }
+
+        .extractor-container {
+            border: 2px solid var(--accent-red);
+        }
+
+        /* Mode Switcher Tabs */
+        .mode-switcher {
+            display: flex;
+            background: var(--step-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 4px;
+            margin-bottom: 20px;
+            gap: 4px;
+        }
+        .mode-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--muted-color);
+            padding: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .mode-tab.active {
+            background: var(--accent-red);
+            color: white;
+        }
+        
+        h2, h3 {
+            margin-top: 0;
+            color: var(--accent-red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        h3 {
+            font-size: 1.25rem;
+        }
+        p.subtitle {
+            margin: 0 0 14px 0;
+            font-size: 0.95rem;
+            color: var(--muted-color);
+        }
+        p.subtitle a {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 90px;
+            height: 110px;
+            background: var(--textarea-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            resize: vertical;
+            box-sizing: border-box;
+            margin-bottom: 14px;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--accent-red);
+        }
+        button.action-btn {
+            background: var(--accent-red);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button.action-btn:hover {
+            background: var(--accent-dark-red);
+        }
+        .results {
+            margin-top: 20px;
+            display: none;
+            border-top: 1px solid var(--border-color);
+            padding-top: 16px;
+        }
+        .result-group {
+            margin-bottom: 14px;
+        }
+        
+        /* Batch Grid Layout */
+        .batch-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+        @media (max-width: 1024px) {
+            .batch-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 600px) {
+            .batch-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .batch-item-card {
+            background: var(--step-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            box-sizing: border-box;
+            justify-content: space-between;
+        }
+
+        .info-panel {
+            display: flex;
+            gap: 14px;
+            background: var(--info-bg);
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            align-items: flex-start;
+        }
+        .small-thumb {
+            width: 90px;
+            height: auto;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            flex-shrink: 0;
+            content-visibility: auto;
+        }
+        .metadata-content {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .metadata-content p {
+            margin: 0 0 6px 0;
+        }
+        .metadata-content strong {
+            color: var(--accent-red);
+        }
+        .metadata-content a {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .tag-badge {
+            display: inline-block;
+            background: var(--step-bg);
+            border: 1px solid var(--border-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 4px;
+            margin-bottom: 4px;
+            color: var(--muted-color);
+        }
+
+        video {
+            width: 100%;
+            max-height: 240px;
+            border-radius: 8px;
+            background: #000;
+            display: block;
+        }
+        .download-btn {
+            display: block;
+            background-color: var(--accent-red);
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            text-align: center;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        .download-btn:hover {
+            background-color: var(--accent-dark-red);
+        }
+
+        /* Guide Steps */
+        .guide-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            color: var(--muted-color);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .guide-step-item {
+            background: var(--step-bg);
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        .step-badge {
+            display: inline-block;
+            background: var(--accent-red);
+            color: #ffffff;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
+        }
+        .guide-step-text {
+            color: var(--text-color);
+            display: block;
+            margin-bottom: 0;
+        }
+        .extension-dl-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-red);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-top: 8px;
+        }
+
+        /* FAQ Section */
+        .faq-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .faq-item {
+            background: var(--step-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .faq-question {
+            padding: 12px 14px;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-answer {
+            padding: 0 14px 12px 14px;
+            color: var(--muted-color);
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: none;
+        }
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-question i {
+            color: var(--accent-red);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--nav-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            color: var(--muted-color);
+        }
+        .footer-credit a {
+            color: var(--accent-red);
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .beer-btn {
+            background-color: var(--beer-bg);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .beer-btn i {
+            color: var(--accent-red);
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Top Navigation Bar -->
+    <nav>
+        <a href="#" class="nav-brand">
+            <i class="fa-solid fa-video"></i> RedGifs Video Downloader
+        </a>
+        <div class="nav-links">
+            <a href="#RedGifsDownloader"><i class="fa-solid fa-download"></i> Download</a>
+            <a href="#extractionGuide"><i class="fa-solid fa-book-open"></i> Guide</a>
+            <a href="#faqSection"><i class="fa-solid fa-circle-question"></i> FAQ</a>
+            <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()" title="Toggle Theme">
+                <i class="fa-solid fa-moon" id="themeIcon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <div class="wrapper">
+        
+        <!-- Downloader Tool Container -->
+        <div class="container extractor-container" id="RedGifsDownloader">
+            <!-- Mode Switcher Tabs -->
+            <div class="mode-switcher">
+                <button class="mode-tab active" id="normalModeTab" onclick="switchMode('normal')">
+                    <i class="fa-solid fa-square"></i> Normal Mode
+                </button>
+                <button class="mode-tab" id="batchModeTab" onclick="switchMode('batch')">
+                    <i class="fa-solid fa-layer-group"></i> Batch Mode
+                </button>
+            </div>
+
+            <!-- Normal Mode Section -->
+            <div id="normalModeSection">
+                <h2><i class="fa-solid fa-wand-magic-sparkles"></i> RedGifs Video Extractor</h2>
+                <p class="subtitle">Paste your HTML container code below: <a href="#extractionGuide">(how to get it?)</a></p>
+                <textarea id="htmlInput" placeholder="Paste HTML code here..."></textarea>
+                <button class="action-btn" onclick="processHTML()"><i class="fa-solid fa-gears"></i> Extract & Process</button>
+
+                <div class="results" id="resultsSection">
+                    <div class="result-group">
+                        <div class="info-panel">
+                            <img id="thumbImg" class="small-thumb" src="" alt="Thumbnail" loading="lazy">
+                            <div class="metadata-content" id="metaDetails"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-group">
+                        <video id="videoPreview" controls loop muted playsinline preload="none"></video>
+                        <a id="downloadBtn" class="download-btn" href="/media/redgifs-tile-source-copier-v1.0.0" target="_blank" download><i class="fa-solid fa-download"></i> Download Video File</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Batch Mode Section -->
+            <div id="batchModeSection" style="display: none;">
+                <h2><i class="fa-solid fa-layer-group"></i> Batch Video Extractor (Up to 8 Codes)</h2>
+                <p class="subtitle">Paste up to 8 different HTML container codes below: <a href="#extractionGuide">(how to get it?)</a></p>
+                <textarea id="batchInput" placeholder="Paste up to 8 HTML blocks here..."></textarea>
+                <button class="action-btn" onclick="processBatchHTML()"><i class="fa-solid fa-bolt"></i> Process Batch (Max 8)</button>
+
+                <div class="results" id="batchResultsSection">
+                    <div class="batch-grid" id="batchGridContainer"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- How to extract the video code Section (Placeholders removed) -->
+        <div class="guide-container" id="extractionGuide">
+            <h3><i class="fa-solid fa-book-open"></i> How to extract the video code</h3>
+            <div class="guide-steps">
+                <div class="guide-step-item">
+                    <span class="step-badge">Step 1</span>
+                    <span class="guide-step-text">Download the helper extension.</span>
+                    <a href="#" class="extension-dl-btn"><i class="fa-solid fa-download"></i> Download</a>
+                </div>
+                <div class="guide-step-item">
+                    <span class="step-badge">Step 2</span>
+                    <span class="guide-step-text">Install the extension in your browser's Developer Mode.</span>
+                </div>
+                <div class="guide-step-item">
+                    <span class="step-badge">Step 3</span>
+                    <span class="guide-step-text">Right-click on any RedGifs video tile while browsing.</span>
+                </div>
+                <div class="guide-step-item">
+                    <span class="step-badge">Step 4</span>
+                    <span class="guide-step-text">Click "copy redgifs tile source code" from the context menu.</span>
+                </div>
+                <div class="guide-step-item">
+                    <span class="step-badge">Step 5</span>
+                    <span class="guide-step-text">Paste the copied code into the Extractor box on this page.</span>
+                </div>
+                <div class="guide-step-item">
+                    <span class="step-badge">Step 6</span>
+                    <span class="guide-step-text">Click the Extract and Process button to parse the information.</span>
+                </div>
+                <div class="guide-step-item">
+                    <span class="step-badge">Step 7</span>
+                    <span class="guide-step-text">Save the video file directly to your device.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-container" id="faqSection">
+            <h3><i class="fa-solid fa-circle-question"></i> Frequently Asked Questions</h3>
+            <div class="faq-list">
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What is RedGifs Video Downloader? <i class="fa-solid fa-chevron-down"></i></div><div class="faq-answer">A free tool to download videos from RedGifs easily.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">What is batch mode? <i class="fa-solid fa-chevron-down"></i></div><div class="faq-answer">Process up to 8 HTML codes simultaneously.</div></div>
+                <div class="faq-item"><div class="faq-question" onclick="toggleFaq(this)">Is this website safe? <i class="fa-solid fa-chevron-down"></i></div><div class="faq-answer">100% ad-free, tracker-free, and safe.</div></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 RedGifs Video Extractor | All rights reserved.</p>
+        <p class="footer-credit">Project made by <a href="https://T6Digital.com" target="_blank" rel="noopener noreferrer">T6Digital</a></p>
+        <a href="https://buymeacoffee.com/t6digital" class="beer-btn" target="_blank"><i class="fa-solid fa-beer-mug-empty"></i> Buy Me A Beer</a>
+		<p>&copy; Current Versions: RedGifs Video Extractor : 1.0.0 | Redgifs Source Tile Copier 1.0.0</p>
+    </footer>
+
+    <script>
+    function toggleTheme() {
+        const body = document.body;
+        const themeIcon = document.getElementById('themeIcon');
+        let currentTheme = body.getAttribute('data-theme');
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'light');
+            themeIcon.className = 'fa-solid fa-sun';
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            themeIcon.className = 'fa-solid fa-moon';
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+        document.getElementById('themeIcon').className = savedTheme === 'light' ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    });
+
+    function switchMode(mode) {
+        const normalTab = document.getElementById('normalModeTab');
+        const batchTab = document.getElementById('batchModeTab');
+        const normalSection = document.getElementById('normalModeSection');
+        const batchSection = document.getElementById('batchModeSection');
+        const container = document.getElementById('RedGifsDownloader');
+
+        if (mode === 'normal') {
+            normalTab.classList.add('active');
+            batchTab.classList.remove('active');
+            normalSection.style.display = 'block';
+            batchSection.style.display = 'none';
+            container.classList.remove('batch-active');
+        } else {
+            batchTab.classList.add('active');
+            normalTab.classList.remove('active');
+            batchSection.style.display = 'block';
+            normalSection.style.display = 'none';
+            container.classList.add('batch-active');
+        }
+    }
+
+    function toggleFaq(element) {
+        element.parentElement.classList.toggle('active');
+    }
+
+    function processHTML() {
+        const htmlInputElem = document.getElementById('htmlInput');
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlInputElem.value, 'text/html');
+        const imgElement = doc.querySelector('img');
+        const clickAreaElement = doc.querySelector('.clickArea');
+        
+        if (!imgElement || !imgElement.src) {
+            alert('Could not find a valid image tag or source URL.');
+            return;
+        }
+        
+        const imageUrl = imgElement.src;
+        const videoUrl = imageUrl.replace('-mobile.jpg', '.mp4');
+        let uploader = 'Unknown', uploadDate = 'Unknown', tagsHtml = '';
+
+        if (clickAreaElement && clickAreaElement.hasAttribute('aria-label')) {
+            const ariaLabel = clickAreaElement.getAttribute('aria-label');
+            const uploaderMatch = ariaLabel.match(/uploaded by\s+([^\s]+)/i);
+            if (uploaderMatch) uploader = uploaderMatch[1];
+            const dateMatch = ariaLabel.match(/\d{2}\/\d{2}\/\d{4}\s+\d{2}:\d{2}:\d{2}/);
+            if (dateMatch) uploadDate = dateMatch[0];
+            
+            let cleanTagsPart = ariaLabel.split(/uploaded by/i)[0].trim();
+            if (cleanTagsPart) {
+                const feedItemId = doc.querySelector('.tileItem')?.getAttribute('data-feed-item-id');
+                if (feedItemId) cleanTagsPart = cleanTagsPart.replace(feedItemId, '').trim();
+                const tagArray = cleanTagsPart.split(',').map(t => t.trim()).filter(Boolean);
+                tagsHtml = tagArray.map(t => `<span class="tag-badge">${t}</span>`).join('');
+            }
+        }
+
+        document.getElementById('thumbImg').src = imageUrl;
+        document.getElementById('metaDetails').innerHTML = `
+            <p><strong>Uploader:</strong> <a href="https://www.redgifs.com/users/${uploader}" target="_blank">${uploader}</a></p>
+            <p><strong>Date:</strong> ${uploadDate}</p>
+            <p><strong>Tags:</strong><br>${tagsHtml || 'None'}</p>
+        `;
+        
+        const videoElem = document.getElementById('videoPreview');
+        videoElem.src = videoUrl;
+        videoElem.load();
+        
+        document.getElementById('downloadBtn').href = videoUrl;
+        document.getElementById('resultsSection').style.display = 'block';
+        htmlInputElem.value = '';
+    }
+
+    function processBatchHTML() {
+        const batchInputElem = document.getElementById('batchInput');
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(batchInputElem.value.trim(), 'text/html');
+        const imgElements = doc.querySelectorAll('img');
+        
+        if (imgElements.length === 0) {
+            alert('No valid video thumbnails found.');
+            return;
+        }
+
+        const gridContainer = document.getElementById('batchGridContainer');
+        gridContainer.innerHTML = '';
+        const limit = Math.min(imgElements.length, 8);
+
+        for (let i = 0; i < limit; i++) {
+            const imgElement = imgElements[i];
+            const imageUrl = imgElement.src;
+            if (!imageUrl) continue;
+            
+            const videoUrl = imageUrl.replace('-mobile.jpg', '.mp4');
+            const clickAreaElement = imgElement.closest('.clickArea') || doc.querySelector('.clickArea');
+            let uploader = 'Unknown', uploadDate = 'Unknown', tagsHtml = '';
+
+            const ariaLabel = clickAreaElement?.getAttribute('aria-label') || '';
+            if (ariaLabel) {
+                const uploaderMatch = ariaLabel.match(/uploaded by\s+([^\s]+)/i);
+                if (uploaderMatch) uploader = uploaderMatch[1];
+                const dateMatch = ariaLabel.match(/\d{2}\/\d{2}\/\d{4}\s+\d{2}:\d{2}:\d{2}/);
+                if (dateMatch) uploadDate = dateMatch[0];
+                let cleanTagsPart = ariaLabel.split(/uploaded by/i)[0].trim();
+                if (cleanTagsPart) {
+                    const tagArray = cleanTagsPart.split(',').map(t => t.trim()).filter(Boolean);
+                    tagsHtml = tagArray.map(t => `<span class="tag-badge">${t}</span>`).join('');
+                }
+            }
+
+            const card = document.createElement('div');
+            card.className = 'batch-item-card';
+            card.innerHTML = `
+                <div class="info-panel" style="flex-direction: column; align-items: center; text-align: center;">
+                    <img class="small-thumb" src="${imageUrl}" alt="Thumbnail" loading="lazy" style="width: 100%; max-height: 140px; object-fit: cover;">
+                    <div class="metadata-content" style="width: 100%; text-align: left; font-size: 0.85rem; margin-top: 6px;">
+                        <p><strong>Uploader:</strong> ${uploader}</p>
+                        <p><strong>Date:</strong> ${uploadDate}</p>
+                    </div>
+                </div>
+                <a class="download-btn" href="${videoUrl}" target="_blank" download style="font-size: 0.85rem; padding: 8px; margin-top: 0;"><i class="fa-solid fa-download"></i> Download</a>
+            `;
+            gridContainer.appendChild(card);
+        }
+
+        document.getElementById('batchResultsSection').style.display = 'block';
+        batchInputElem.value = '';
+    }
+    </script>
+</body>
+</html>
