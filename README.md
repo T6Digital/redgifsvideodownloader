@@ -29,3 +29,10 @@ A simple tool to download videos from RedGifs easily. This method uses a compani
 
 * **100% Safe:** The extension and web page contain no viruses, malware, tracking, or phishing mechanisms. 
 * **Open Source / Transparent:** Feel free to inspect the source code.
+
+---
+
+## Step By Step Image Guide
+[![View on Imgur](https://imgur.com/YVAM3Up.png)](https://imgur.com/a/YVAM3Up)
+
+*(Click the image above to view the full album/preview)*
