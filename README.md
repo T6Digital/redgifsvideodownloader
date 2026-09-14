@@ -34,8 +34,8 @@ A simple tool to download videos from RedGifs easily. This method uses a compani
 
 ## Step By Step Image Guide
 
-<a href="https://imgur.com/a/YVAM3Up" target="_blank">
-  <img src="https://i.imgur.com/YVAM3Up.png" alt="View on Imgur" />
+<a href="https://imgur.com/a/SOxBbfT" target="_blank">
+  <img src="https://i.imgur.com/SOxBbfT.png" alt="View on Imgur" />
 </a>
 
 *(Click the image above to view the full album/preview)*
