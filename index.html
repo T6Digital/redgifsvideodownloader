@@ -332,6 +332,14 @@
             padding: 12px 14px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .step-badge {
             display: inline-block;
@@ -341,12 +349,14 @@
             padding: 2px 6px;
             border-radius: 4px;
             font-size: 0.8rem;
-            margin-bottom: 6px;
+        }
+        .step-header i {
+            color: var(--accent-red);
+            font-size: 0.95rem;
         }
         .guide-step-text {
             color: var(--text-color);
             display: block;
-            margin-bottom: 0;
         }
         .extension-dl-btn {
             display: inline-flex;
@@ -359,7 +369,8 @@
             text-decoration: none;
             font-weight: bold;
             font-size: 0.85rem;
-            margin-top: 8px;
+            margin-top: 4px;
+            width: fit-content;
         }
 
         /* FAQ Section */
@@ -485,7 +496,7 @@
                     
                     <div class="result-group">
                         <video id="videoPreview" controls loop muted playsinline preload="none"></video>
-                        <a id="downloadBtn" class="download-btn" href="/media/redgifs-tile-source-copier-v1.0.0" target="_blank" download><i class="fa-solid fa-download"></i> Download Video File</a>
+                        <a id="downloadBtn" class="download-btn" href="#" target="_blank" download><i class="fa-solid fa-download"></i> Download Video File</a>
                     </div>
                 </div>
             </div>
@@ -503,43 +514,64 @@
             </div>
         </div>
 
-        <!-- How to extract the video code Section (Placeholders removed) -->
+        <!-- How to extract the video code Section with Step Icons -->
         <div class="guide-container" id="extractionGuide">
             <h3><i class="fa-solid fa-book-open"></i> How to extract the video code</h3>
             <div class="guide-steps">
                 <div class="guide-step-item">
-                    <span class="step-badge">Step 1</span>
+                    <div class="step-header">
+                        <span class="step-badge">Step 1</span>
+                        <i class="fa-solid fa-cloud-arrow-down"></i>
+                    </div>
                     <span class="guide-step-text">Download the helper extension.</span>
                     <a href="#" class="extension-dl-btn"><i class="fa-solid fa-download"></i> Download</a>
                 </div>
                 <div class="guide-step-item">
-                    <span class="step-badge">Step 2</span>
+                    <div class="step-header">
+                        <span class="step-badge">Step 2</span>
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </div>
                     <span class="guide-step-text">Install the extension in your browser's Developer Mode.</span>
                 </div>
                 <div class="guide-step-item">
-                    <span class="step-badge">Step 3</span>
+                    <div class="step-header">
+                        <span class="step-badge">Step 3</span>
+                        <i class="fa-solid fa-computer-mouse"></i>
+                    </div>
                     <span class="guide-step-text">Right-click on any RedGifs video tile while browsing.</span>
                 </div>
                 <div class="guide-step-item">
-                    <span class="step-badge">Step 4</span>
+                    <div class="step-header">
+                        <span class="step-badge">Step 4</span>
+                        <i class="fa-solid fa-copy"></i>
+                    </div>
                     <span class="guide-step-text">Click "copy redgifs tile source code" from the context menu.</span>
                 </div>
                 <div class="guide-step-item">
-                    <span class="step-badge">Step 5</span>
+                    <div class="step-header">
+                        <span class="step-badge">Step 5</span>
+                        <i class="fa-solid fa-paste"></i>
+                    </div>
                     <span class="guide-step-text">Paste the copied code into the Extractor box on this page.</span>
                 </div>
                 <div class="guide-step-item">
-                    <span class="step-badge">Step 6</span>
+                    <div class="step-header">
+                        <span class="step-badge">Step 6</span>
+                        <i class="fa-solid fa-gears"></i>
+                    </div>
                     <span class="guide-step-text">Click the Extract and Process button to parse the information.</span>
                 </div>
                 <div class="guide-step-item">
-                    <span class="step-badge">Step 7</span>
+                    <div class="step-header">
+                        <span class="step-badge">Step 7</span>
+                        <i class="fa-solid fa-floppy-disk"></i>
+                    </div>
                     <span class="guide-step-text">Save the video file directly to your device.</span>
                 </div>
             </div>
         </div>
 
-               <!-- FAQ Section -->
+                     <!-- FAQ Section -->
         <div class="faq-container" id="faqSection">
             <h3><i class="fa-solid fa-circle-question"></i> Frequently Asked Questions</h3>
             <div class="faq-list">
@@ -586,13 +618,11 @@
             </div>
         </div>
 
-
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 RedGifs Video Extractor | All rights reserved.</p>
+        <p>&copy; 2026 RedGifs Video Extractor v1.0. All rights reserved.</p>
         <p class="footer-credit">Project made by <a href="https://T6Digital.com" target="_blank" rel="noopener noreferrer">T6Digital</a></p>
-        <a href="https://buymeacoffee.com/t6digital" class="beer-btn" target="_blank"><i class="fa-solid fa-beer-mug-empty"></i> Buy Me A Beer</a>
-		<p>Current Versions: RedGifs Video Extractor : 1.0.0 | Redgifs Source Tile Copier 1.0.0</p>
+        <a href="#" class="beer-btn" target="_blank"><i class="fa-solid fa-beer-mug-empty"></i> Buy Me A Beer</a>
     </footer>
 
     <script>
