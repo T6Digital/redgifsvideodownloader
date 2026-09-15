@@ -44,6 +44,6 @@ A simple tool to download videos from RedGifs easily. This method uses a compani
 
 ## Live Demo
 
-* **Try  Here** [Click](https://s8utility.github.io/redgifsvideodownloader/). 
+* **Try  Here** [Click]([https://s8utility.github.io/redgifsvideodownloader/](https://s8utility.com/free-online-redgifs-downloader/). 
 
 
