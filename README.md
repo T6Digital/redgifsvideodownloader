@@ -39,3 +39,11 @@ A simple tool to download videos from RedGifs easily. This method uses a compani
 </a>
 
 *(Click the image above to view the full album/preview)*
+
+---
+
+## Live Demo
+
+* **Try  Here** [The extension and web page contain no viruses, malware, tracking, or phishing mechanisms](https://t6digital.github.io/redgifsvideodownloader/). 
+
+
