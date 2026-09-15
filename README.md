@@ -6,7 +6,7 @@ A simple tool to download videos from RedGifs easily. This method uses a compani
 
 ## Installation
 
-1. **Download the Extension:** Download the Chrome/Edge extension package Here => ([Download the Chrome/Edge Extension]) *(https://s8utility.github.io/redgifsvideodownloader/media/redgifs-tile-source-copier-v1.0.0.zip)*.
+1. **Download the Extension:** Download the Chrome/Edge extension package here: [Download the Chrome/Edge Extension](https://s8utility.github.io/redgifsvideodownloader/media/redgifs-tile-source-copier-v1.0.0.zip)
 2. **Enable Developer Mode:** 
    * Open your browser's extension page (`chrome://extensions` or `edge://extensions`).
    * Toggle on **Developer mode** in the top right corner.
@@ -34,9 +34,7 @@ A simple tool to download videos from RedGifs easily. This method uses a compani
 
 ## Step By Step Image Guide
 
-<a href="https://imgur.com/a/SOxBbfT" target="_blank">
-  <img src="https://i.imgur.com/SOxBbfT.png" alt="View on Imgur" />
-</a>
+[![View on Imgur](https://i.imgur.com/SOxBbfT.png)](https://imgur.com/a/SOxBbfT)
 
 *(Click the image above to view the full album/preview)*
 
